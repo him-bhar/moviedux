@@ -28,7 +28,33 @@ const MoviesGrid = () => {
         setRating(evt.target.value);
     }
 
-    const filteredMovies = movies.filter((movie) => movie.title.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesSearchTerm = (movie, searchTerm) => {
+        return movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+    }
+
+    const matchesGenre = (movie, genre) => {
+        return genre === 'All Genres' || movie.genre.toLowerCase() === genre.toLowerCase()
+    }
+
+    const matchesRating = (movie, rating) => {
+        switch (rating) {
+            case "All":
+                return true;
+            case "Good":
+                return movie.rating >= 8;
+            case "Ok":
+                return movie.rating>=5 && movie.rating < 8;
+            case "Bad":
+                return movie.rating < 5;
+            default:
+                return false;
+        }
+    }
+
+    const filteredMovies = movies.filter((movie) =>
+        matchesGenre(movie, genre) &&
+        matchesRating(movie, rating) &&
+        matchesSearchTerm(movie, searchTerm));
 
     //In the input field value is set as {searchTerm}, this is for binding the value, initial display or re-rendering.
     // If we don't do this, with each re-render this will become empty.
