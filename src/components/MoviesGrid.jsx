@@ -3,7 +3,9 @@ import '../styles.css';
 import MovieCard from "./MovieCard.jsx";
 
 //Destructured props movies inject into MoviesGrid
-const MoviesGrid = ({movies}) => {
+//toggleWatchlist is the method reference.
+//Order of arguments does not matter, but the name should be same where it's injected from (App Component) and here.
+const MoviesGrid = ({movies, watchlist, toggleWatchlist}) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [genre, setGenre] = useState("All Genres");
     const [rating, setRating] = useState("All");
@@ -35,7 +37,7 @@ const MoviesGrid = ({movies}) => {
             case "Good":
                 return movie.rating >= 8;
             case "Ok":
-                return movie.rating>=5 && movie.rating < 8;
+                return movie.rating >= 5 && movie.rating < 8;
             case "Bad":
                 return movie.rating < 5;
             default:
@@ -52,7 +54,8 @@ const MoviesGrid = ({movies}) => {
     // If we don't do this, with each re-render this will become empty.
     return (
         <div>
-            <input type="text" placeholder="Search Movies..." className="search-input" value={searchTerm} onChange={handleSearchChange} />
+            <input type="text" placeholder="Search Movies..." className="search-input" value={searchTerm}
+                   onChange={handleSearchChange}/>
             <div className="filter-bar">
                 <div className="filter-slot">
                     <label>Genre</label>
@@ -77,7 +80,10 @@ const MoviesGrid = ({movies}) => {
             <div className="movies-grid">
                 {
                     filteredMovies.map((movie) => (
-                        <MovieCard key={movie.id} movie={movie}/>
+                        <MovieCard key={movie.id}
+                                   movie={movie}
+                                   toggleWatchlist={toggleWatchlist}
+                                   isWatchlisted={watchlist.includes(movie.id)} />
                     ))
                 }
             </div>

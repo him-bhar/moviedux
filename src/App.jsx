@@ -8,6 +8,9 @@ import React, {useEffect, useState} from "react";
 
 function App() {
     const [movies, setMovies] = useState([]);
+    //watchlist is defined here, so it can be shared between MoviesGrid, where watchlist is created/defined,
+    // and Watchlist component where it is being displayed
+    const [watchlist, setWatchlist] = useState([]);
 
     useEffect(() => {
         //loading from the file.
@@ -16,6 +19,16 @@ function App() {
             .then(data => setMovies(data));
     }, []); //2nd arg is an empty array, because we don't have any dependency,
     // only when this component is loaded this should execute.
+
+    const toggleWatchlist = (movieId) => {
+        //Arg in the update state function, gives us access to existing state, so we can decide what we need to do.
+        setWatchlist((prevWatchlist) => {
+            //Typical ternary operation if movie is already in watchlist remove it, else add it
+            return prevWatchlist.includes(movieId)
+                ? prevWatchlist.filter(id => id !== movieId)
+                : [...prevWatchlist, movieId];
+        });
+    }
 
     return (
       <div>
@@ -32,8 +45,8 @@ function App() {
                   </nav>
 
                   <Routes>
-                      <Route path="/" element={<MoviesGrid movies={movies} />} ></Route>
-                      <Route path="/watchlist" element={<Watchlist />} ></Route>
+                      <Route path="/" element={<MoviesGrid movies={movies} watchlist={watchlist} toggleWatchlist={toggleWatchlist} />} ></Route>
+                      <Route path="/watchlist" element={<Watchlist watchlist={watchlist} movies={movies} toggleWatchlist={toggleWatchlist} />} ></Route>
                   </Routes>
               </Router>
           </div>

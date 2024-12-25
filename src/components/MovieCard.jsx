@@ -2,11 +2,11 @@ import React from "react";
 import '../styles.css'
 import PropTypes from 'prop-types';
 
-function MovieCard(props) {
+//Injected isWatchlisted (am I watchlisted?) and toggleWatchlist here, because the actual adding and removing a movie in watchlist will happen here.
+function MovieCard({movie, isWatchlisted, toggleWatchlist}) {
     MovieCard.propTypes = {
         movie: PropTypes.object.isRequired
     }
-    const movie = props.movie;
 
     //this is just another style of writing js functions (this is arrow function)
     const handleError = (evt) => { //event that caused the error

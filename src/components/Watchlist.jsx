@@ -1,7 +1,7 @@
 import React from "react";
 import '../styles.css';
 
-const Watchlist = () => {
+const Watchlist = ({movies, watchlist, toggleWatchlist}) => {
     return (
         <div>
             <h1 className="title">Your watchlist</h1>
