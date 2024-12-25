@@ -1,20 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import '../styles.css';
 import MovieCard from "./MovieCard.jsx";
 
-const MoviesGrid = () => {
-    const [movies, setMovies] = useState([]);
+//Destructured props movies inject into MoviesGrid
+const MoviesGrid = ({movies}) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [genre, setGenre] = useState("All Genres");
     const [rating, setRating] = useState("All");
-
-    useEffect(() => {
-        //loading from the file.
-        fetch("movies.json")
-            .then(res => res.json())
-            .then(data => setMovies(data));
-    }, []); //2nd arg is an empty array, because we don't have any dependency,
-    // only when this component is loaded this should execute.
 
     const handleSearchChange = (evt) => {
         setSearchTerm(evt.target.value);

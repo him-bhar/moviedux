@@ -4,11 +4,20 @@ import Footer from "./components/Footer.jsx";
 import MoviesGrid from "./components/MoviesGrid.jsx";
 import Watchlist from "./components/Watchlist.jsx";
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
-import MovieCard from "./components/MovieCard.jsx";
+import React, {useEffect, useState} from "react";
 
 function App() {
+    const [movies, setMovies] = useState([]);
 
-  return (
+    useEffect(() => {
+        //loading from the file.
+        fetch("movies.json")
+            .then(res => res.json())
+            .then(data => setMovies(data));
+    }, []); //2nd arg is an empty array, because we don't have any dependency,
+    // only when this component is loaded this should execute.
+
+    return (
       <div>
           <div className="container">
               <Header />
@@ -23,14 +32,14 @@ function App() {
                   </nav>
 
                   <Routes>
-                      <Route path="/" element={<MoviesGrid />} ></Route>
+                      <Route path="/" element={<MoviesGrid movies={movies} />} ></Route>
                       <Route path="/watchlist" element={<Watchlist />} ></Route>
                   </Routes>
               </Router>
           </div>
           <Footer />
       </div>
-  )
+    )
 }
 
 export default App
