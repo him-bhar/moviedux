@@ -4,8 +4,10 @@ import '../styles.css';
 const MoviesGrid = () => {
     const [movies, setMovies] = useState([]);
     useEffect(() => {
-        const m = ['a', 'b', 'c'];
-        setMovies(m);  //State updated causing component to re-render.
+        //loading from the file.
+        fetch("movies.json")
+            .then(res => res.json())
+            .then(data => setMovies(data));
     }, []); //2nd arg is an empty array, because we don't have any dependency,
     // only when this component is loaded this should execute.
     return (
