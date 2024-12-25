@@ -8,10 +8,16 @@ function MovieCard(props) {
     }
     const movie = props.movie;
 
-    //this is just another style of writing js functions
+    //this is just another style of writing js functions (this is arrow function)
     const handleError = (evt) => { //event that caused the error
         evt.target.src = "images/default.jpg"; //Since this function is tied on img tag, so target is img,
         // this line is essentially replacing the src tag with the default.jpg
+    }
+
+    const getRatingClass = (rating) => {
+        if (rating >= 8) return "rating-good";
+        if (rating >= 5 && rating < 8) return "rating-ok";
+        return "rating-bad";
     }
 
     return (
@@ -20,7 +26,7 @@ function MovieCard(props) {
             <div className="movie-card-info">
                 <h3 className="movie-card-title">{movie.title}</h3>
                 <p className="movie-card-genre">{movie.genre}</p>
-                <p className="movie-card-rating">{movie.rating}</p>
+                <p className={`movie-card-rating ${getRatingClass(movie.rating)}`}>{movie.rating}</p>
             </div>
         </div>
     );
